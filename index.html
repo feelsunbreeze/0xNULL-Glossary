@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>0xNULL — Field Glossary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #080909;
+  --bg2:       #0d0f0e;
+  --bg3:       #111412;
+  --line:      #1c2020;
+  --line2:     #242a27;
+  --p:         #2bff72;
+  --p-dim:     #1a9944;
+  --p-glow:    rgba(43,255,114,0.08);
+  --p-subtle:  rgba(43,255,114,0.04);
+  --amber:     #ffb830;
+  --red:       #ff4d4d;
+  --blue:      #5eb8ff;
+  --purple:    #b57bff;
+  --t1:        #d6ddd8;
+  --t2:        #7a8c80;
+  --t3:        #3d4d42;
+  --mono:      'IBM Plex Mono', 'Courier New', monospace;
+  --sans:      'IBM Plex Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--t1);
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.6;
+  min-height: 100vh;
+  cursor: crosshair;
+}
+
+/* scanline overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.18) 2px,
+    rgba(0,0,0,0.18) 4px
+  );
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* subtle dot grid */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--line2) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ─── TOP BAR ─── */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 0;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--p);
+  box-shadow: 0 0 8px var(--p);
+  animation: pulse 2.4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--p); }
+  50%       { opacity: 0.4; box-shadow: 0 0 3px var(--p); }
+}
+
+.topbar-id {
+  font-size: 11px;
+  color: var(--t3);
+  letter-spacing: 0.08em;
+}
+
+.topbar-right {
+  font-size: 11px;
+  color: var(--t3);
+  letter-spacing: 0.06em;
+}
+
+.topbar-right span { color: var(--p-dim); }
+
+/* ─── HERO ─── */
+.hero {
+  padding: 4rem 0 3rem;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(80px, 18vw, 180px);
+  font-weight: 600;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--line2);
+  letter-spacing: -0.04em;
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.hero-tag {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--p);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hero-tag::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background: var(--p);
+}
+
+h1 {
+  font-family: var(--mono);
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--t1);
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+h1 .null {
+  color: var(--p);
+  text-shadow: 0 0 20px rgba(43,255,114,0.3);
+}
+
+.hero-desc {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--t2);
+  max-width: 480px;
+  line-height: 1.8;
+  position: relative;
+}
+
+.hero-desc em {
+  color: var(--t1);
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* ─── CONTROLS ─── */
+.controls {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 180px;
+}
+
+.search-prefix {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--p);
+  font-size: 13px;
+  pointer-events: none;
+  line-height: 1;
+}
+
+#search {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--line2);
+  padding: 0.4rem 0 0.4rem 1.4rem;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--t1);
+  outline: none;
+  transition: border-color 0.2s;
+  caret-color: var(--p);
+}
+
+#search::placeholder { color: var(--t3); }
+#search:focus { border-color: var(--p-dim); }
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.filter-btn {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid var(--line2);
+  background: transparent;
+  color: var(--t3);
+  cursor: pointer;
+  transition: all 0.15s;
+  border-radius: 2px;
+}
+
+.filter-btn:hover { color: var(--t2); border-color: var(--t3); }
+
+.filter-btn.active {
+  background: var(--p-subtle);
+  border-color: var(--p-dim);
+  color: var(--p);
+}
+
+/* ─── STATS BAR ─── */
+.stats-bar {
+  display: flex;
+  gap: 2rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--t3);
+}
+
+.stats-bar span { color: var(--p); }
+
+/* ─── ENTRIES ─── */
+.entries {
+  border-bottom: 1px solid var(--line);
+}
+
+.entry {
+  border-bottom: 1px solid var(--line);
+  transition: background 0.1s;
+}
+
+.entry:last-child { border-bottom: none; }
+.entry.hidden { display: none; }
+
+.entry-header {
+  display: grid;
+  grid-template-columns: 160px 1fr auto auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.entry-header:hover { background: var(--p-subtle); margin: 0 -1.5rem; padding: 1rem 1.5rem; }
+
+.term-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.term {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--p);
+  letter-spacing: 0.04em;
+}
+
+.term-full {
+  font-size: 10px;
+  color: var(--t3);
+  letter-spacing: 0.02em;
+}
+
+.short-def {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--t2);
+  line-height: 1.5;
+}
+
+.tag {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid;
+  border-radius: 2px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tag.security { color: var(--red);    border-color: rgba(255,77,77,0.3);    background: rgba(255,77,77,0.05); }
+.tag.crypto   { color: var(--amber);  border-color: rgba(255,184,48,0.3);   background: rgba(255,184,48,0.05); }
+.tag.os       { color: var(--blue);   border-color: rgba(94,184,255,0.3);   background: rgba(94,184,255,0.05); }
+.tag.network  { color: var(--t1);     border-color: var(--line2);           background: transparent; }
+.tag.ai       { color: var(--purple); border-color: rgba(181,123,255,0.3);  background: rgba(181,123,255,0.05); }
+.tag.gaming   { color: var(--p);      border-color: rgba(43,255,114,0.3);   background: rgba(43,255,114,0.05); }
+.tag.hardware { color: var(--amber);  border-color: rgba(255,184,48,0.3);   background: rgba(255,184,48,0.05); }
+
+.chevron {
+  font-size: 11px;
+  color: var(--t3);
+  transition: transform 0.2s, color 0.15s;
+  flex-shrink: 0;
+}
+
+.entry.open .chevron { transform: rotate(90deg); color: var(--p); }
+
+/* ─── ENTRY BODY ─── */
+.entry-body {
+  display: none;
+  padding: 0 0 1.5rem;
+  padding-left: 160px;
+  padding-right: 2rem;
+}
+
+@media (max-width: 600px) {
+  .entry-body { padding-left: 0; }
+}
+
+.entry.open .entry-body { display: block; }
+
+.def-block {
+  border-left: 2px solid var(--line2);
+  padding-left: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.full-def {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  font-weight: 300;
+  color: var(--t2);
+  line-height: 1.85;
+}
+
+.full-def strong {
+  color: var(--t1);
+  font-weight: 500;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.full-def code {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--p-dim);
+  background: var(--p-subtle);
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+
+.example-block {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  align-items: start;
+  margin-top: 0.875rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg3);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--p-dim);
+  border-radius: 0 3px 3px 0;
+}
+
+.example-label {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--p-dim);
+  padding-top: 1px;
+  white-space: nowrap;
+}
+
+.example-text {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 300;
+  color: var(--t3);
+  line-height: 1.7;
+  font-style: italic;
+}
+
+.example-text em {
+  color: var(--t2);
+  font-style: normal;
+}
+
+/* ─── NO RESULTS ─── */
+#no-results {
+  display: none;
+  padding: 3rem 0;
+  text-align: center;
+  color: var(--t3);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+#no-results::before {
+  content: '404 // ';
+  color: var(--red);
+}
+
+/* ─── FOOTER ─── */
+footer {
+  padding: 2rem 0 3rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.footer-copy {
+  font-size: 11px;
+  color: var(--t3);
+  letter-spacing: 0.06em;
+}
+
+.footer-copy .sig {
+  color: var(--p);
+  font-weight: 500;
+}
+
+.footer-copy .year { color: var(--t3); }
+
+.footer-sub {
+  font-size: 10px;
+  color: var(--t3);
+  letter-spacing: 0.04em;
+  font-style: italic;
+}
+
+.footer-right {
+  font-size: 10px;
+  color: var(--t3);
+  letter-spacing: 0.06em;
+  text-align: right;
+  line-height: 1.9;
+}
+
+.footer-right a {
+  color: var(--p-dim);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.footer-right a:hover { color: var(--p); }
+
+/* ─── MOBILE ─── */
+@media (max-width: 640px) {
+  .entry-header {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 0.4rem 1rem;
+  }
+
+  .term-col { grid-column: 1; grid-row: 1; }
+  .chevron  { grid-column: 2; grid-row: 1; align-self: center; }
+  .short-def { grid-column: 1 / -1; grid-row: 2; }
+  .tag { display: none; }
+
+  h1 { font-size: 2.2rem; }
+  .hero-bg-text { display: none; }
+  .stats-bar { flex-wrap: wrap; gap: 1rem; }
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.entry {
+  animation: fadeUp 0.3s ease both;
+}
+
+.entry:nth-child(1)  { animation-delay: 0.02s; }
+.entry:nth-child(2)  { animation-delay: 0.04s; }
+.entry:nth-child(3)  { animation-delay: 0.06s; }
+.entry:nth-child(4)  { animation-delay: 0.08s; }
+.entry:nth-child(5)  { animation-delay: 0.10s; }
+.entry:nth-child(6)  { animation-delay: 0.12s; }
+.entry:nth-child(7)  { animation-delay: 0.14s; }
+.entry:nth-child(8)  { animation-delay: 0.16s; }
+.entry:nth-child(9)  { animation-delay: 0.18s; }
+.entry:nth-child(10) { animation-delay: 0.20s; }
+.entry:nth-child(11) { animation-delay: 0.22s; }
+.entry:nth-child(12) { animation-delay: 0.24s; }
+.entry:nth-child(13) { animation-delay: 0.26s; }
+
+/* blinking cursor on title */
+h1 .cursor {
+  display: inline-block;
+  width: 3px;
+  height: 0.85em;
+  background: var(--p);
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: blink 1.1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ─── SIMPLE MODE TOGGLE ─── */
+#simple-toggle {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid var(--line2);
+  background: transparent;
+  color: var(--t3);
+  cursor: pointer;
+  transition: all 0.15s;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+#simple-toggle:hover { color: var(--t2); border-color: var(--t3); }
+
+/* ─── SIMPLE MODE OVERRIDES ─── */
+body.simple {
+  background: #ffffff;
+  color: #111111;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 16px;
+  line-height: 1.8;
+  cursor: auto;
+}
+
+body.simple::before,
+body.simple::after { display: none; }
+
+body.simple .topbar {
+  border-bottom: 2px solid #111;
+  padding: 0.75rem 0;
+}
+
+body.simple .topbar-id {
+  font-family: Georgia, serif;
+  font-size: 13px;
+  color: #555;
+  letter-spacing: 0;
+}
+
+body.simple .topbar-right { display: none; }
+body.simple .status-dot { display: none; }
+
+body.simple #simple-toggle {
+  font-family: Georgia, serif;
+  font-size: 12px;
+  letter-spacing: 0;
+  color: #555;
+  border-color: #ccc;
+  border-radius: 3px;
+  text-transform: none;
+}
+
+body.simple .hero {
+  padding: 2.5rem 0 2rem;
+  border-bottom: 1px solid #ddd;
+}
+
+body.simple .hero-bg-text { display: none; }
+
+body.simple .hero-tag {
+  font-family: Georgia, serif;
+  font-size: 12px;
+  color: #888;
+  letter-spacing: 0;
+  text-transform: none;
+}
+body.simple .hero-tag::before { display: none; }
+
+body.simple h1 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 700;
+  color: #111;
+  letter-spacing: 0;
+}
+
+body.simple h1 .null {
+  color: #111;
+  text-shadow: none;
+}
+
+body.simple h1 .cursor { display: none; }
+
+body.simple .hero-desc {
+  font-family: Georgia, serif;
+  font-size: 15px;
+  color: #444;
+  font-weight: 400;
+}
+
+body.simple .hero-desc em { color: #111; }
+
+body.simple .controls {
+  border-bottom: 1px solid #ddd;
+  padding: 1rem 0;
+}
+
+body.simple .search-prefix { color: #aaa; }
+
+body.simple #search {
+  font-family: Georgia, serif;
+  font-size: 15px;
+  border-bottom-color: #ccc;
+  color: #111;
+  caret-color: #111;
+}
+
+body.simple #search:focus { border-bottom-color: #888; }
+
+body.simple .filter-btn {
+  font-family: Georgia, serif;
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #666;
+  border-color: #ccc;
+  border-radius: 3px;
+}
+
+body.simple .filter-btn:hover { color: #111; border-color: #888; background: transparent; }
+body.simple .filter-btn.active { background: #f0f0f0; border-color: #888; color: #111; }
+
+body.simple .stats-bar {
+  font-family: Georgia, serif;
+  font-size: 12px;
+  color: #aaa;
+  letter-spacing: 0;
+  border-bottom-color: #ddd;
+  text-transform: none;
+}
+
+body.simple .stats-bar span { color: #555; }
+
+body.simple .entry {
+  border-bottom: 1px solid #eee;
+  animation: none;
+}
+
+body.simple .entry-header {
+  grid-template-columns: 150px 1fr auto auto;
+  padding: 0.9rem 0;
+}
+
+body.simple .entry-header:hover {
+  background: #fafafa;
+  margin: 0;
+  padding: 0.9rem 0;
+}
+
+body.simple .term {
+  font-family: Georgia, serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+  letter-spacing: 0;
+}
+
+body.simple .term-full {
+  font-family: Georgia, serif;
+  font-size: 11px;
+  color: #999;
+}
+
+body.simple .short-def {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: #444;
+}
+
+body.simple .tag {
+  font-family: Georgia, serif;
+  font-size: 10px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #666;
+  border-color: #ddd;
+  background: #f5f5f5;
+}
+
+body.simple .tag.security,
+body.simple .tag.crypto,
+body.simple .tag.os,
+body.simple .tag.ai,
+body.simple .tag.gaming,
+body.simple .tag.hardware,
+body.simple .tag.network {
+  color: #555;
+  border-color: #ddd;
+  background: #f5f5f5;
+}
+
+body.simple .chevron { color: #bbb; }
+body.simple .entry.open .chevron { color: #555; }
+
+body.simple .entry-body { padding-left: 150px; }
+
+body.simple .def-block { border-left-color: #ddd; }
+
+body.simple .full-def {
+  font-family: Georgia, serif;
+  font-size: 15px;
+  color: #333;
+  font-weight: 400;
+}
+
+body.simple .full-def strong {
+  font-family: Georgia, serif;
+  font-size: 15px;
+  color: #111;
+  letter-spacing: 0;
+}
+
+body.simple .full-def code {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #333;
+  background: #f0f0f0;
+}
+
+body.simple .example-block {
+  background: #fafafa;
+  border-color: #ddd;
+  border-left-color: #bbb;
+}
+
+body.simple .example-label {
+  font-family: Georgia, serif;
+  font-size: 10px;
+  color: #999;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+body.simple .example-text {
+  font-family: Georgia, serif;
+  font-size: 13px;
+  color: #666;
+}
+
+body.simple .example-text em { color: #333; }
+
+body.simple #no-results { color: #aaa; }
+body.simple #no-results::before { content: ''; color: inherit; }
+
+body.simple footer {
+  border-top-color: #eee;
+}
+
+body.simple .footer-copy {
+  font-family: Georgia, serif;
+  font-size: 12px;
+  color: #aaa;
+}
+
+body.simple .footer-copy .sig { color: #555; }
+
+body.simple .footer-sub {
+  font-family: Georgia, serif;
+  font-size: 11px;
+  color: #bbb;
+}
+
+body.simple .footer-right {
+  font-family: Georgia, serif;
+  font-size: 11px;
+  color: #bbb;
+}
+
+body.simple .footer-right a { color: #888; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="status-dot"></div>
+      <span class="topbar-id">0xNULL // FIELD GLOSSARY // v1.0</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <button id="simple-toggle" onclick="toggleSimple()" title="Toggle simple mode">simple mode</button>
+      <div class="topbar-right">SYS:<span>ONLINE</span></div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg-text">NULL</div>
+    <div class="hero-tag">tech group · quick reference</div>
+    <h1><span class="null">0xNULL</span><br>Jargon Index<span class="cursor"></span></h1>
+    <p class="hero-desc">
+      New here? This is your onboarding doc.<br>
+      Terms that come up in <em>our discussions</em> — explained without the condescension.
+    </p>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <div class="search-wrap">
+      <span class="search-prefix">&gt;_</span>
+      <input type="text" id="search" placeholder="search terms..." autocomplete="off" spellcheck="false" />
+    </div>
+    <div class="filters">
+      <button class="filter-btn active" data-cat="all">All</button>
+      <button class="filter-btn" data-cat="security">Security</button>
+      <button class="filter-btn" data-cat="crypto">Crypto</button>
+      <button class="filter-btn" data-cat="os">OS</button>
+      <button class="filter-btn" data-cat="ai">AI</button>
+      <button class="filter-btn" data-cat="gaming">Gaming</button>
+      <button class="filter-btn" data-cat="hardware">Hardware</button>
+      <button class="filter-btn" data-cat="network">Network</button>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-bar" id="stats-bar">
+    <div>entries&nbsp;<span id="stat-visible">13</span></div>
+    <div>categories&nbsp;<span>7</span></div>
+    <div>press <span>/</span> to search</div>
+  </div>
+
+  <!-- ENTRIES -->
+  <div class="entries" id="entries">
+
+    <div class="entry" data-cat="security" data-terms="rat remote access trojan malware clipboard">
+      <div class="entry-header" onclick="toggle(this)">
+        <div class="term-col">
+          <span class="term">RAT</span>
+          <span class="term-full">Remote Access Trojan</span>
+        </div>
+        <span class="short-def">Hidden malware giving an attacker silent control of your device</span>
+        <span class="tag security">Security</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="entry-body">
+        <div class="def-block">
+          <p class="full-def">
+            <strong>Remote Access Trojan.</strong> Malware that silently gives an attacker full control of your device — files, camera, keystrokes, clipboard — without you ever knowing.
+          </p>
+        </div>
+        <div class="example-block">
+          <span class="example-label">Analogy</span>
+          <span class="example-text">Like a spare key to your house that you never gave out — someone's inside, watching, and they never move anything so you don't notice.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="entry" data-cat="security" data-terms="cve vulnerability exploit common vulnerabilities exposures">
+      <div class="entry-header" onclick="toggle(this)">
+        <div class="term-col">
+          <span class="term">CVE</span>
+          <span class="term-full">Common Vulnerabilities and Exposures</span>
+        </div>
+        <span class="short-def">Standardized ID for a publicly known security flaw</span>
+        <span class="tag security">Security</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="entry-body">
+        <div class="def-block">
+          <p class="full-def">
+            <strong>Common Vulnerabilities and Exposures.</strong> A global registry that assigns a unique ID to every publicly known security flaw so researchers, vendors, and engineers can all talk about it precisely.
+          </p>
+        </div>
+        <div class="example-block">
+          <span class="example-label">Analogy</span>
+          <span class="example-text">Like a crime report number — the incident happened, it's documented, and everyone can look it up and reference it without confusion.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="entry" data-cat="security" data-terms="idor insecure direct object reference access control url">
+      <div class="entry-header" onclick="toggle(this)">
+        <div class="term-col">
+          <span class="term">IDOR</span>
+          <span class="term-full">Insecure Direct Object Reference</span>
+        </div>
+        <span class="short-def">Accessing someone else's data by tweaking a number in the URL</span>
+        <span class="tag security">Security</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="entry-body">
+        <div class="def-block">
+          <p class="full-def">
+            <strong>Insecure Direct Object Reference.</strong> A web vulnerability where changing a number in the URL gives you access to someone else's data because the server never checks if you're supposed to be there.
+          </p>
+        </div>
+        <div class="example-block">
+          <span class="example-label">Analogy</span>
+          <span class="example-text">Hotel room 204 is yours. You try 205 — the door opens. The hotel handed out keys without checking which room you booked.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="entry" data-cat="security" data-terms="xss cross site scripting inject javascript browser session">
+      <div class="entry-header" onclick="toggle(this)">
+        <div class="term-col">
+          <span class="term">XSS</span>
+          <span class="term-full">Cross-Site Scripting</span>
+        </div>
+        <span class="short-def">Injecting malicious scripts into a site that run in other users' browsers</span>
+        <span class="tag security">Security</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="entry-body">
+        <div class="def-block">
+          <p class="full-def">
+            <strong>Cross-Site Scripting.</strong> Planting malicious code in a website that then runs inside every other visitor's browser — stealing sessions, redirecting, or silently sending data out.
+          </p>
+        </div>
+        <div class="example-block">
+          <span class="example-label">Analogy</span>
+          <span class="example-text">Leaving a note in a library book that, when the next person opens it, pickpockets them automatically.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="entry" data-cat="gaming" data-terms="denuvo anti-tamper drm crack piracy protection games">
+      <div class="entry-header" onclick="toggle(this)">
+        <div class="term-col">
+          <span class="term">Denuvo</span>
+          <span class="term-full">Anti-Tamper DRM</span>
+        </div>
+        <span class="short-def">Anti-piracy tech embedded in games — recently cracked via hypervisor</span>
+        <span class="tag gaming">Gaming</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="entry-body">
+        <div class="def-block">
+          <p class="full-def">
+            <strong>Denuvo Anti-Tamper.</strong> A DRM layer embedded in PC games that continuously checks the game hasn't been modified, crashing it if tampering is detected.
+          </p>
+        </div>
+        <div class="example-block">
+          <span class="example-label">Analogy</span>
+          <span class="example-text">A security guard who patrols the building every few seconds checking nothing's been moved — until someone figured out how to make him hallucinate that everything's fine.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="entry" data-cat="os" data-terms="hypervisor virtualization vm ring0 kernel privilege below os">
+      <div class="entry-header" onclick="toggle(this)">
+        <div class="term-col">
+          <span class="term">Hypervisor</span>
+          <span class="term-full">Virtual Machine Monitor</span>
+        </div>
+        <span class="short-def">Software layer beneath the OS that controls everything above it</span>
+        <span class="tag os">OS</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="entry-body">
+        <div class="def-block">
+          <p class="full-def">
+            <strong>Hypervisor.</strong> Software running below the OS that manages virtual machines — because it sits deeper than the OS itself, it controls what the OS sees and can intercept anything passing through.
+          </p>
+        </div>
+        <div class="example-block">
+          <span class="example-label">Analogy</span>
+          <span class="example-text">The OS is a city. The hypervisor is the ground it's built on — it can make roads appear, disappear, or lead somewhere else entirely.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="entry" data-cat="os" data-terms="clipboard windows copy paste unprotected read intercept">
+      <div class="entry-header" onclick="toggle(this)">
+        <div class="term-col">
+          <span class="term">Clipboard</span>
+          <span class="term-full">System Clipboard Vulnerability</span>
+        </div>
+        <span class="short-def">Windows clipboard is readable by any app — including malicious ones</span>
+        <span class="tag os">OS</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="entry-body">
+        <div class="def-block">
+          <p class="full-def">
+            <strong>System Clipboard — Unprotected.</strong> On Windows, anything you copy (Ctrl+C) sits in a shared buffer that any app with basic permissions can silently read at any time — no warning, no prompt.
+          </p>
+        </div>
+        <div class="example-block">
+          <span class="example-label">Analogy</span>
+          <span class="example-text">Writing a secret note and leaving it on a table in a room where anyone can walk in — you think you're passing it privately, but it's just sitting there.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="entry" data-cat="crypto" data-terms="seed phrase mnemonic wallet recovery private key backup crypto">
+      <div class="entry-header" onclick="toggle(this)">
+        <div class="term-col">
+          <span class="term">Seed Phrase</span>
+          <span class="term-full">Mnemonic Recovery Phrase</span>
+        </div>
+        <span class="short-def">12–24 words that are the master key to your entire crypto wallet</span>
+        <span class="tag crypto">Crypto</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="entry-body">
+        <div class="def-block">
+          <p class="full-def">
+            <strong>Seed Phrase.</strong> A sequence of 12–24 words that fully reconstruct your crypto wallet on any device — whoever has these words owns everything in the wallet, permanently.
+          </p>
+        </div>
+        <div class="example-block">
+          <span class="example-label">Analogy</span>
+          <span class="example-text">The master key to a vault, except there's no locksmith to call, no bank to dispute with, and making a copy for someone gives them the vault forever.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="entry" data-cat="security" data-terms="ransomware malware encrypt files payment extort piracy">
+      <div class="entry-header" onclick="toggle(this)">
+        <div class="term-col">
+          <span class="term">Ransomware</span>
+          <span class="term-full">Extortionware / Crypto-Locker</span>
+        </div>
+        <span class="short-def">Malware that encrypts your files and demands payment to unlock them</span>
+        <span class="tag security">Security</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="entry-body">
+        <div class="def-block">
+          <p class="full-def">
+            <strong>Ransomware.</strong> Malware that encrypts all your files — making them completely unreadable — then demands payment for the decryption key, with no guarantee you ever get it.
+          </p>
+        </div>
+        <div class="example-block">
+          <span class="example-label">Analogy</span>
+          <span class="example-text">Someone breaks into your house, puts all your belongings in a locked safe, and slides a note under the door: "pay me and I'll tell you the combination. Maybe."</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="entry" data-cat="security" data-terms="api key hardcoded secret token credential mobile app decompile">
+      <div class="entry-header" onclick="toggle(this)">
+        <div class="term-col">
+          <span class="term">Hardcoded Key</span>
+          <span class="term-full">Hardcoded API Key / Secret</span>
+        </div>
+        <span class="short-def">A secret credential left exposed inside the app's own code</span>
+        <span class="tag security">Security</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="entry-body">
+        <div class="def-block">
+          <p class="full-def">
+            <strong>Hardcoded API Key.</strong> A secret credential baked directly into an app's code — anyone who disassembles the app can read it and use it to impersonate the service it belongs to.
+          </p>
+        </div>
+        <div class="example-block">
+          <span class="example-label">Analogy</span>
+          <span class="example-text">Printing the key to your office's server room on the back of every employee ID badge — it's "inside" the card, but anyone with a scanner can get it out.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="entry" data-cat="hardware" data-terms="brain implant bci neural interface brain computer paralyzed">
+      <div class="entry-header" onclick="toggle(this)">
+        <div class="term-col">
+          <span class="term">BCI</span>
+          <span class="term-full">Brain-Computer Interface</span>
+        </div>
+        <span class="short-def">Device implanted in the brain to read or send neural signals directly</span>
+        <span class="tag hardware">Hardware</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="entry-body">
+        <div class="def-block">
+          <p class="full-def">
+            <strong>Brain-Computer Interface.</strong> A device that reads electrical signals directly from neurons and translates them into digital commands — or sends signals back — bypassing all physical movement.
+          </p>
+        </div>
+        <div class="example-block">
+          <span class="example-label">Analogy</span>
+          <span class="example-text">Like a translator sitting between your thoughts and a computer, except the translator is surgically attached and works in milliseconds.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="entry" data-cat="security" data-terms="vulnerability bug flaw weakness exploit attack surface">
+  <div class="entry-header" onclick="toggle(this)">
+    <div class="term-col">
+      <span class="term">Vulnerability</span>
+      <span class="term-full">Security Vulnerability</span>
+    </div>
+    <span class="short-def">A weakness in software that can be exploited to cause unintended behavior</span>
+    <span class="tag security">Security</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="entry-body">
+    <div class="def-block">
+      <p class="full-def">
+        <strong>Vulnerability.</strong> A flaw in code, configuration, or design that allows someone to make a system do something it wasn't supposed to — read private data, crash, or hand over control.
+      </p>
+    </div>
+    <div class="example-block">
+      <span class="example-label">Analogy</span>
+      <span class="example-text">A crack in a wall that looks cosmetic but runs all the way through — harmless until someone knows exactly where to push.</span>
+    </div>
+  </div>
+</div>
+
+<div class="entry" data-cat="os" data-terms="low level hardware assembly memory registers kernel system programming">
+  <div class="entry-header" onclick="toggle(this)">
+    <div class="term-col">
+      <span class="term">Low Level</span>
+      <span class="term-full">Low-Level Programming</span>
+    </div>
+    <span class="short-def">Writing code that talks directly to hardware, with no abstraction in between</span>
+    <span class="tag os">OS / System</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="entry-body">
+    <div class="def-block">
+      <p class="full-def">
+        <strong>Low-Level.</strong> Code written close to the hardware — dealing with memory addresses, CPU registers, and raw bytes directly instead of letting a language or framework handle it for you. More control, more responsibility, fewer safety nets.
+      </p>
+    </div>
+    <div class="example-block">
+      <span class="example-label">Analogy</span>
+      <span class="example-text">Driving a car with no power steering, no ABS, manual everything — harder, but you feel exactly what the machine is doing.</span>
+    </div>
+  </div>
+</div>
+
+<div class="entry" data-cat="security" data-terms="reverse engineering disassemble decompile binary analysis ida ghidra">
+  <div class="entry-header" onclick="toggle(this)">
+    <div class="term-col">
+      <span class="term">Reverse Eng.</span>
+      <span class="term-full">Reverse Engineering</span>
+    </div>
+    <span class="short-def">Taking a finished program apart to understand how it works without the source code</span>
+    <span class="tag security">Security</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="entry-body">
+    <div class="def-block">
+      <p class="full-def">
+        <strong>Reverse Engineering.</strong> Analyzing a compiled program — one you only have the final binary of — to reconstruct its logic, find vulnerabilities, or understand its behavior. Done using disassemblers and debuggers that translate machine code back into something human-readable.
+      </p>
+    </div>
+    <div class="example-block">
+      <span class="example-label">Analogy</span>
+      <span class="example-text">Receiving a finished cake and figuring out the exact recipe from taste, texture, and smell alone — no cookbook, no chef to ask.</span>
+    </div>
+  </div>
+</div>
+
+<div class="entry" data-cat="security" data-terms="cracking crack bypass drm license keygen patch protection">
+  <div class="entry-header" onclick="toggle(this)">
+    <div class="term-col">
+      <span class="term">Cracking</span>
+      <span class="term-full">Software Cracking</span>
+    </div>
+    <span class="short-def">Bypassing copy protection or license checks in software</span>
+    <span class="tag security">Security</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="entry-body">
+    <div class="def-block">
+      <p class="full-def">
+        <strong>Cracking.</strong> Modifying or patching a program to remove or bypass its copy protection, license validation, or DRM — making it run without the authentication it was designed to require.
+      </p>
+    </div>
+    <div class="example-block">
+      <span class="example-label">Analogy</span>
+      <span class="example-text">A turnstile that checks your ticket — cracking is rewiring it so the arm spins freely regardless of whether a valid ticket was scanned.</span>
+    </div>
+  </div>
+</div>
+
+<div class="entry" data-cat="network" data-terms="torrent bittorrent p2p peer to peer download seeding leeching">
+  <div class="entry-header" onclick="toggle(this)">
+    <div class="term-col">
+      <span class="term">Torrent</span>
+      <span class="term-full">BitTorrent Protocol</span>
+    </div>
+    <span class="short-def">A peer-to-peer file sharing protocol where everyone downloading also uploads</span>
+    <span class="tag network">Network</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="entry-body">
+    <div class="def-block">
+      <p class="full-def">
+        <strong>Torrent / BitTorrent.</strong> A file transfer protocol where instead of downloading from one central server, you pull pieces from dozens of other users simultaneously — and share pieces back as you receive them. No single point of failure, scales the more people use it.
+      </p>
+    </div>
+    <div class="example-block">
+      <span class="example-label">Analogy</span>
+      <span class="example-text">Instead of one person photocopying a book for everyone, the whole room shares pages with each other at once — faster, and the copy doesn't degrade with scale.</span>
+    </div>
+  </div>
+</div>
+
+  </div><!-- /entries -->
+
+  <div id="no-results">// no entries matched your query</div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">
+      <div class="footer-copy">
+        &copy; <span class="year">2026</span> <span class="sig">sunbreeze</span> // all rights reserved
+      </div>
+      <div class="footer-sub">compiled for 0xNULL · feelsunbreeze.com</div>
+    </div>
+    <div class="footer-right">
+      v1.0 · 13 entries<br>
+      <a href="https://feelsunbreeze.com" target="_blank" rel="noopener">feelsunbreeze.com ↗</a>
+    </div>
+  </footer>
+
+</div><!-- /page -->
+
+<script>
+  const searchInput = document.getElementById('search');
+  const entries     = document.querySelectorAll('.entry');
+  const noResults   = document.getElementById('no-results');
+  const statVisible = document.getElementById('stat-visible');
+  const filterBtns  = document.querySelectorAll('.filter-btn');
+  let activeCategory = 'all';
+
+  function applyFilters() {
+    const q = searchInput.value.toLowerCase().trim();
+    let count = 0;
+
+    entries.forEach(entry => {
+      const cat      = entry.dataset.cat;
+      const terms    = (entry.dataset.terms || '').toLowerCase();
+      const termText = entry.querySelector('.term').textContent.toLowerCase();
+      const shortText= entry.querySelector('.short-def').textContent.toLowerCase();
+      const defText  = (entry.querySelector('.full-def') || {}).textContent?.toLowerCase() || '';
+
+      const catMatch  = activeCategory === 'all' || cat === activeCategory;
+      const textMatch = !q || terms.includes(q) || termText.includes(q) || shortText.includes(q) || defText.includes(q);
+
+      if (catMatch && textMatch) {
+        entry.classList.remove('hidden');
+        count++;
+      } else {
+        entry.classList.add('hidden');
+        entry.classList.remove('open');
+      }
+    });
+
+    statVisible.textContent = count;
+    noResults.style.display = count === 0 ? 'block' : 'none';
+  }
+
+  searchInput.addEventListener('input', applyFilters);
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCategory = btn.dataset.cat;
+      applyFilters();
+    });
+  });
+
+  function toggle(header) {
+    const entry = header.parentElement;
+    const wasOpen = entry.classList.contains('open');
+    entry.classList.toggle('open', !wasOpen);
+  }
+
+  // simple mode
+  const btn = document.getElementById('simple-toggle');
+  function toggleSimple() {
+    const on = document.body.classList.toggle('simple');
+    btn.textContent = on ? 'hacker mode' : 'simple mode';
+    try { localStorage.setItem('0xnull-simple', on ? '1' : '0'); } catch(e) {}
+  }
+  try {
+    if (localStorage.getItem('0xnull-simple') === '1') toggleSimple();
+  } catch(e) {}
+
+  // press / to focus search
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && document.activeElement !== searchInput) {
+      e.preventDefault();
+      searchInput.focus();
+    }
+    if (e.key === 'Escape') {
+      searchInput.blur();
+      searchInput.value = '';
+      applyFilters();
+    }
+  });
+</script>
+</body>
+</html>
