@@ -1399,6 +1399,126 @@ body.simple .footer-right a { color: #888; }
     </div>
   </div>
 </div>
+
+<!-- CREDENTIAL STUFFING -->
+<div class="entry" data-cat="security" data-terms="credential stuffing login attack automated breach reuse password combolist">
+  <div class="entry-header" onclick="toggle(this)">
+    <div class="term-col">
+      <span class="term">Credential Stuffing</span>
+      <span class="term-full">Automated Login Attack via Leaked Credentials</span>
+    </div>
+    <span class="short-def">Using leaked username/password pairs from one breach to break into accounts elsewhere</span>
+    <span class="tag security">Security</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="entry-body">
+    <div class="def-block">
+      <p class="full-def">
+        <strong>Credential Stuffing.</strong> An attack where an adversary takes username/password combinations leaked from one data breach and automatically tries them against other services — exploiting the fact that people reuse passwords across sites. Unlike brute-force, every attempt uses a real, previously valid credential, making it far harder to detect.
+      </p>
+    </div>
+    <div class="example-block">
+      <span class="example-label">Analogy</span>
+      <span class="example-text">Someone finds a master key ring that opened one building. They don't pick any locks — they just walk up to every door in the city and try each key until something opens.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ACCOUNT CRACKING -->
+<div class="entry" data-cat="security" data-terms="account cracking takeover brute force checker combolist unauthorized access">
+  <div class="entry-header" onclick="toggle(this)">
+    <div class="term-col">
+      <span class="term">Account Cracking</span>
+      <span class="term-full">Unauthorized Account Takeover</span>
+    </div>
+    <span class="short-def">Systematically breaking into online accounts using leaked credentials or brute-force methods</span>
+    <span class="tag security">Security</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="entry-body">
+    <div class="def-block">
+      <p class="full-def">
+        <strong>Account Cracking.</strong> The practice of gaining unauthorized access to online accounts — typically using automated tools, combolists, and checkers. Distinct from software cracking, which targets copy protection. Methods range from credential stuffing with leaked data to password spraying. Cracked accounts are sold, used for fraud, or mined for personal data.
+      </p>
+    </div>
+    <div class="example-block">
+      <span class="example-label">Analogy</span>
+      <span class="example-text">A thief doesn't break down doors — they have a huge ring of keys copied from old locks, and a helper who quietly tests each one on every door in the building until something clicks.</span>
+    </div>
+  </div>
+</div>
+
+<!-- COMBOLIST -->
+<div class="entry" data-cat="security" data-terms="combolist combo list credentials leaked database email password pairs stuffing">
+  <div class="entry-header" onclick="toggle(this)">
+    <div class="term-col">
+      <span class="term">Combolist</span>
+      <span class="term-full">Credential Combination List</span>
+    </div>
+    <span class="short-def">A text file of leaked email:password pairs, the fuel for credential stuffing attacks</span>
+    <span class="tag security">Security</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="entry-body">
+    <div class="def-block">
+      <p class="full-def">
+        <strong>Combolist.</strong> A compiled file — often millions of lines — containing <code>email:password</code> or <code>username:password</code> pairs harvested from data breaches, phishing campaigns, or malware logs. Combolists are traded on dark web forums and form the raw input for automated credential stuffing and account cracking operations.
+      </p>
+    </div>
+    <div class="example-block">
+      <span class="example-label">Example format</span>
+      <span class="example-text"><code>john.doe@email.com:hunter2</code> — millions of these lines, aggregated from dozens of separate breaches, packaged and distributed as a single file.</span>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKER -->
+<div class="entry" data-cat="security" data-terms="checker account checker cracking tool automation config credential validation stuffing tool">
+  <div class="entry-header" onclick="toggle(this)">
+    <div class="term-col">
+      <span class="term">Checker</span>
+      <span class="term-full">Credential Validation Tool</span>
+    </div>
+    <span class="short-def">An automated tool that tests combolist entries against a target site at scale</span>
+    <span class="tag security">Security</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="entry-body">
+    <div class="def-block">
+      <p class="full-def">
+        <strong>Checker.</strong> A tool used in account cracking that takes a combolist and fires login requests at a target service in bulk, sorting results into "hits" (valid credentials) and "fails." Checkers use configs — small scripts describing how a site's login flow works — to mimic legitimate traffic. Often paired with proxy pools to evade IP-based rate limiting.
+      </p>
+    </div>
+    <div class="example-block">
+      <span class="example-label">Analogy</span>
+      <span class="example-text">A robotic arm that tries every key on your ring against a lock — thousands of times a minute — and drops any key that works into a separate "hits" pile, automatically.</span>
+    </div>
+  </div>
+</div>
+
+<!-- PWNED -->
+<div class="entry" data-cat="security" data-terms="pwned owned compromised breach hacked slang gaming internet culture haveibeenpwned">
+  <div class="entry-header" onclick="toggle(this)">
+    <div class="term-col">
+      <span class="term">Pwned</span>
+      <span class="term-full">Compromised / Owned</span>
+    </div>
+    <span class="short-def">Slang for being fully compromised — your credentials, account, or system fell into someone else's hands</span>
+    <span class="tag security">Security</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="entry-body">
+    <div class="def-block">
+      <p class="full-def">
+        <strong>Pwned.</strong> Originally a typo of "owned" from early gaming culture — meaning to decisively defeat someone. In security contexts it means your credentials or system have been compromised, typically through a data breach. Popularized as a technical term by Troy Hunt's <em>Have I Been Pwned</em> (HIBP), a service that lets users check whether their email appears in known breach databases.
+      </p>
+    </div>
+    <div class="example-block">
+      <span class="example-label">In the wild</span>
+      <span class="example-text">"Your email was pwned in the RockYou2024 breach" — meaning that email/password combo is now floating in public combolists and should be treated as fully compromised.</span>
+    </div>
+  </div>
+</div>
   </div><!-- /entries -->
 
   <div id="no-results">// no entries matched your query</div>
