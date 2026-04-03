@@ -1019,7 +1019,7 @@ body.simple .footer-right a { color: #888; }
           <span class="term-full">Virtual Machine Monitor</span>
         </div>
         <span class="short-def">Software layer beneath the OS that controls everything above it</span>
-        <span class="tag os">OS</span>
+        <span class="tag os">OS / System</span>
         <span class="chevron">▶</span>
       </div>
       <div class="entry-body">
@@ -1042,7 +1042,7 @@ body.simple .footer-right a { color: #888; }
           <span class="term-full">System Clipboard Vulnerability</span>
         </div>
         <span class="short-def">Windows clipboard is readable by any app — including malicious ones</span>
-        <span class="tag os">OS</span>
+        <span class="tag os">OS / System</span>
         <span class="chevron">▶</span>
       </div>
       <div class="entry-body">
@@ -1264,7 +1264,143 @@ body.simple .footer-right a { color: #888; }
     </div>
   </div>
 </div>
+<div class="entry" data-cat="os" data-terms="stack memory call function lifo last in first out">
+  <div class="entry-header" onclick="toggle(this)">
+    <div class="term-col">
+      <span class="term">Stack</span>
+      <span class="term-full">Call Stack / Stack Memory</span>
+    </div>
+    <span class="short-def">A region of memory that tracks function calls and local variables in order</span>
+    <span class="tag os">OS / System</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="entry-body">
+    <div class="def-block">
+      <p class="full-def">
+        <strong>Stack.</strong> A structured region of memory where the program keeps track of what function is running, what called it, and what local variables exist — automatically grows and shrinks as functions are called and returned.
+      </p>
+    </div>
+    <div class="example-block">
+      <span class="example-label">Analogy</span>
+      <span class="example-text">A stack of plates — you always add and remove from the top. The bottom plate was the first one placed; you can't reach it until everything above is gone.</span>
+    </div>
+  </div>
+</div>
 
+<div class="entry" data-cat="os" data-terms="buffer memory region fixed size data temporary storage">
+  <div class="entry-header" onclick="toggle(this)">
+    <div class="term-col">
+      <span class="term">Buffer</span>
+      <span class="term-full">Memory Buffer</span>
+    </div>
+    <span class="short-def">A fixed-size chunk of memory reserved to hold data temporarily</span>
+    <span class="tag os">OS / System</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="entry-body">
+    <div class="def-block">
+      <p class="full-def">
+        <strong>Buffer.</strong> A finite block of memory pre-allocated to hold incoming data — a username field, a packet, a file chunk. The size is fixed at creation; what happens when you put more in than it can hold is up to the programmer. Often, nothing good.
+      </p>
+    </div>
+    <div class="example-block">
+      <span class="example-label">Analogy</span>
+      <span class="example-text">A cup — it holds liquid fine until you pour past the rim. What it spills onto depends on what's sitting next to it.</span>
+    </div>
+  </div>
+</div>
+
+<div class="entry" data-cat="os" data-terms="registers cpu hardware memory fast storage assembly low level">
+  <div class="entry-header" onclick="toggle(this)">
+    <div class="term-col">
+      <span class="term">Registers</span>
+      <span class="term-full">CPU Registers</span>
+    </div>
+    <span class="short-def">Tiny ultra-fast memory slots built directly into the CPU</span>
+    <span class="tag os">OS / System</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="entry-body">
+    <div class="def-block">
+      <p class="full-def">
+        <strong>Registers.</strong> The smallest and fastest storage a computer has — a handful of named slots (like <code>rax</code>, <code>rsp</code>, <code>rip</code>) that live inside the CPU itself. Every calculation, memory read, and function call flows through them. The instruction pointer register (<code>rip</code>) is the one attackers most want to control — it determines what executes next.
+      </p>
+    </div>
+    <div class="example-block">
+      <span class="example-label">Analogy</span>
+      <span class="example-text">RAM is your desk, the hard drive is a filing cabinet across the room — registers are what's literally in your hand right now.</span>
+    </div>
+  </div>
+</div>
+
+<div class="entry" data-cat="security" data-terms="buffer overflow overflow smash stack exploit memory corruption">
+  <div class="entry-header" onclick="toggle(this)">
+    <div class="term-col">
+      <span class="term">Buffer Overflow</span>
+      <span class="term-full">Stack / Heap Buffer Overflow</span>
+    </div>
+    <span class="short-def">Writing more data into a buffer than it can hold, corrupting adjacent memory</span>
+    <span class="tag security">Security</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="entry-body">
+    <div class="def-block">
+      <p class="full-def">
+        <strong>Buffer Overflow.</strong> When a program writes more data into a buffer than it was sized for, the excess spills into adjacent memory — overwriting other variables, return addresses, or control data. If an attacker controls what spills over, they can redirect what the program does next.
+      </p>
+    </div>
+    <div class="example-block">
+      <span class="example-label">Analogy</span>
+      <span class="example-text">Filling out a paper form and your answer overflows its box — except the box next to it says "authorized: yes/no" and your pen just wrote "yes" into it.</span>
+    </div>
+  </div>
+</div>
+
+<div class="entry" data-cat="security" data-terms="shellcode payload exploit binary machine code inject execute">
+  <div class="entry-header" onclick="toggle(this)">
+    <div class="term-col">
+      <span class="term">Shellcode</span>
+      <span class="term-full">Exploit Payload / Shellcode</span>
+    </div>
+    <span class="short-def">Raw machine code injected into a vulnerable program to execute attacker commands</span>
+    <span class="tag security">Security</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="entry-body">
+    <div class="def-block">
+      <p class="full-def">
+        <strong>Shellcode.</strong> A small, self-contained blob of machine code — no operating system, no libraries, just raw CPU instructions — crafted to be injected into a vulnerable process and executed. Historically named for its goal of spawning a shell, giving the attacker a command prompt inside the target.
+      </p>
+    </div>
+    <div class="example-block">
+      <span class="example-label">Analogy</span>
+      <span class="example-text">A lockpick set disguised as a key — small, purpose-built, and designed to work inside a lock it was never meant to open.</span>
+    </div>
+  </div>
+</div>
+
+<div class="entry" data-cat="security" data-terms="rop chain return oriented programming gadgets exploit bypass nx dep">
+  <div class="entry-header" onclick="toggle(this)">
+    <div class="term-col">
+      <span class="term">ROP Chain</span>
+      <span class="term-full">Return-Oriented Programming</span>
+    </div>
+    <span class="short-def">Hijacking a program's own code snippets to execute attacker logic without injecting anything</span>
+    <span class="tag security">Security</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="entry-body">
+    <div class="def-block">
+      <p class="full-def">
+        <strong>ROP Chain.</strong> An advanced exploit technique where instead of injecting shellcode, the attacker strings together tiny existing snippets of the program's own code (called gadgets) — each ending in a <code>ret</code> instruction — to perform arbitrary actions. Bypasses defenses that prevent injected code from running, because nothing foreign is ever executed.
+      </p>
+    </div>
+    <div class="example-block">
+      <span class="example-label">Analogy</span>
+      <span class="example-text">You can't bring your own tools into a secure facility — so instead you memorize where every tool already inside is stored and leave a note telling the workers to use them in the exact sequence you need.</span>
+    </div>
+  </div>
+</div>
   </div><!-- /entries -->
 
   <div id="no-results">// no entries matched your query</div>
