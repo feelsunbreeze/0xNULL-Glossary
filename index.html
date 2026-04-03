@@ -850,7 +850,7 @@ body.simple .footer-right a { color: #888; }
   <div class="topbar">
     <div class="topbar-left">
       <div class="status-dot"></div>
-      <span class="topbar-id">0xNULL // FIELD GLOSSARY // v1.0</span>
+      <span class="topbar-id">0xNULL // FIELD GLOSSARY // v1.1</span>
     </div>
     <div style="display:flex;align-items:center;gap:1rem;">
       <button id="simple-toggle" onclick="toggleSimple()" title="Toggle simple mode">simple mode</button>
@@ -861,11 +861,9 @@ body.simple .footer-right a { color: #888; }
   <!-- HERO -->
   <div class="hero">
     <div class="hero-bg-text">NULL</div>
-    <div class="hero-tag">tech group · quick reference</div>
     <h1><span class="null">0xNULL</span><br>Jargon Index<span class="cursor"></span></h1>
     <p class="hero-desc">
-      New here? This is your onboarding doc.<br>
-      Terms that come up in <em>our discussions</em> — explained without the condescension.
+      Terms that come up in <em>our discussions</em> explained without the condescension.
     </p>
   </div>
 
@@ -1411,10 +1409,10 @@ body.simple .footer-right a { color: #888; }
       <div class="footer-copy">
         &copy; <span class="year">2026</span> <span class="sig">sunbreeze</span> // all rights reserved
       </div>
-      <div class="footer-sub">compiled for 0xNULL · feelsunbreeze.com</div>
+      <div class="footer-sub">compiled for 0xNULL · Sunbreeze</div>
     </div>
     <div class="footer-right">
-      v1.0 · 13 entries<br>
+      v1.1 · <span id="footer-count"></span> entries<br>
       <a href="https://feelsunbreeze.com" target="_blank" rel="noopener">feelsunbreeze.com ↗</a>
     </div>
   </footer>
@@ -1427,6 +1425,12 @@ body.simple .footer-right a { color: #888; }
   const noResults   = document.getElementById('no-results');
   const statVisible = document.getElementById('stat-visible');
   const filterBtns  = document.querySelectorAll('.filter-btn');
+
+  const totalCats = new Set([...entries].map(e => e.dataset.cat)).size;
+  document.querySelector('#stats-bar div:nth-child(2) span').textContent = totalCats;
+  const totalEntries = entries.length;
+  statVisible.textContent = totalEntries;
+  document.getElementById('footer-count').textContent = totalEntries;
   let activeCategory = 'all';
 
   function applyFilters() {
